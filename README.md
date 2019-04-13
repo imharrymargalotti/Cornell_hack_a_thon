@@ -2,26 +2,21 @@
 ## Contributing:
 * Harrison Margalotti
 * Tim Clerico
-* Colin Hay
 * Connor Robinson
 * Jeff Page
 ## Task:
-Machine Learning to identify dysfunctional 
-biological pathways in patients based on 
-mutations within genetic code. Trained by 
-functioning genetic code and non functioning 
-genetic code.
+In progress
 
 ### Prerequisites
 
 Works off of data set not included in repo
 
 ## Built With
-
+* Tensorflow
 * Python 3.7
 * Pandas
 * SciKit-Lean
-
+* phylofactor
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

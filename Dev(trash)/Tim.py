@@ -4,9 +4,10 @@ import sklearn
 from scipy import stats
 from Deploy import environset
 
+environset.set_paths()
 
-def read_in_data():
-    environset.set_path_cow_data()
+
+def read_in_COW():
     path = os.environ.get("COW_CSV")
 
     with open(path) as f:
@@ -38,9 +39,10 @@ def read_in_data():
     return ids, results
 
 
-def read_in_csv():
+def read_in_ERR():
+    path = os.environ.get("ERR")
     input = []
-    with open("/Users/timc/PycharmProjects/CowPY/Data/ERR1.csv") as f:
+    with open(path) as f:
         lines=f.readlines()
     f.close()
     clean = [x.strip() for x in lines]
@@ -63,6 +65,15 @@ def read_in_csv():
     return col, data
 
 
+def read_in_y():
+    path = os.environ.get("Y")
+    with open(path) as f:
+        lines = f.readlines()
+    f.close()
+    clean = [int(x.strip()) for x in lines]
+    return clean
+
+
 def clr(X):
     to_return = np.zeros(X.shape)
     m = X.shape[0]
@@ -71,5 +82,3 @@ def clr(X):
         to_return[:,i] = np.log(X[:,i] / x_gmean)
 
     return to_return
-
-

@@ -1,8 +1,10 @@
 import os
 
 
-def set_path_cow_data():
+def set_paths():
     os.environ["COW_CSV"] = str('/Users/timc/PycharmProjects/CowPY/Data/table.from_biom.txt')
+    os.environ["ERR"] = str("/Users/timc/PycharmProjects/CowPY/Data/ERR1.csv")
+    os.environ["Y"] = str("/Users/timc/PycharmProjects/CowPY/Data/y_trainDone.csv")
 
 
 

@@ -1,6 +1,17 @@
 import numpy as np
 import os
+from scipy import stats
 from Deploy import environset
+
+
+def clr(X):
+    to_return = np.zeros(X.shape)
+    m = X.shape[0]
+    for i in range(0,m):
+        x_gmean = stats.gmean(X[:,i])
+        to_return[:,i] = np.log(X[:,i] / x_gmean)
+
+    return to_return
 
 
 def read_in_data():

@@ -38,6 +38,31 @@ def read_in_data():
     return ids, results
 
 
+def read_in_csv():
+    input = []
+    with open("/Users/timc/PycharmProjects/CowPY/Data/ERR1.csv") as f:
+        lines=f.readlines()
+    f.close()
+    clean = [x.strip() for x in lines]
+
+    headers = []
+    for i in range(1, len(clean)):
+        headers.append(clean[i].split(",")[0])
+
+    rows = []
+    for i in range(1,len(clean)):
+        k = clean[i].split(",")
+        nums = []
+        for j in range(1, len(k)):
+            nums.append(float(k[j]))
+        rows.append(nums)
+
+    col = np.asarray(headers)
+    data = np.asarray(rows)
+
+    return col, data
+
+
 def clr(X):
     to_return = np.zeros(X.shape)
     m = X.shape[0]
@@ -47,11 +72,4 @@ def clr(X):
 
     return to_return
 
-
-
-def main():
-    test_mat = np.ones((5,5))
-    test = clr(test_mat)
-    print(test)
-main()
 

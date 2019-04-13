@@ -48,8 +48,8 @@ def read_in_data():
 
 
 
-def main():
-    id, res =read_in_data()
-    print(id)
-main()
+# def main():
+#     id, res =read_in_data()
+#     print(id)
+# main()
 

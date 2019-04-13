@@ -71,7 +71,8 @@ def read_in_y():
         lines = f.readlines()
     f.close()
     clean = [int(x.strip()) for x in lines]
-    return clean
+    res = np.asarray(clean)
+    return res
 
 
 def clr(X):

@@ -1,5 +1,7 @@
 import numpy as np
 import os
+import sklearn
+from scipy import stats
 from Deploy import environset
 
 
@@ -36,9 +38,20 @@ def read_in_data():
     return ids, results
 
 
+def clr(X):
+    to_return = np.zeros(X.shape)
+    m = X.shape[0]
+    for i in range(0,m):
+        x_gmean = stats.gmean(X[:,i])
+        to_return[:,i] = np.log(X[:,i] / x_gmean)
+
+    return to_return
+
+
 
 def main():
-    id, res =read_in_data()
-    print(id)
+    test_mat = np.ones((5,5))
+    test = clr(test_mat)
+    print(test)
 main()
 

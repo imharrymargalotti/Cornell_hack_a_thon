@@ -4,6 +4,7 @@
 * Tim Clerico
 * Connor Robinson
 * Jeff Page
+* Erika Ganda
 ## Task:
 In progress
 

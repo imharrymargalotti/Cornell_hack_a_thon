@@ -1,4 +1,11 @@
 import os
+
+
+def set_path_cow_data():
+    os.environ["COW_CSV"] = str('/Users/timc/PycharmProjects/CowPY/Data/table.from_biom.txt')
+
+
+
 '''
 this is where we will use environment variables for paths and such
 

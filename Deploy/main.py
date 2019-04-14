@@ -28,12 +28,20 @@ def AnomolyDetector(AllCases, y):
     test = H.reshape((53,849))
     # print(test.shape)
     # print(test)
-    clf = IsolationForest(max_samples=1000)
+    clf = IsolationForest(max_samples='auto')
     clf.fit(test)
+    name = ""
     for x in range(3):  # loops case
         case = AllCases[x]
         h, d = ProcessData(case, y[x])
-        plotDist(h, d, clf, (str(x) + "_plot"))
+        if (x==0):
+            name = "e_data"
+        elif(x==1):
+            name = "c_data"
+        else:
+            name = "s_data"
+
+        plotDist(h, d, clf, (str(x) + name))
 
 def ProcessData(data,y_train):
     hArray=[]
@@ -62,6 +70,18 @@ def plotDist(hArray,dArray,IF,name):
     plt.savefig(name,transparant=True)
     plt.show()
 
+def clr(X):
+    to_return = np.zeros(X.shape)
+    ones = np.ones(X.shape)
+    m = X.shape[0]
+    use_me = X+ones
+    for i in range(0,m):
+        x_gmean = stats.gmean(use_me[i,:])
+        to_return[i,:] = np.log(use_me[i,:] / x_gmean)
+    return to_return
+
+
+
 # def plotRoc(fpr,tpr,name):
 #     plt.figure()
 #     lw = 2
@@ -85,9 +105,9 @@ def main():
     # sdata, edata, cdata
     #s_train
     AllData = []
-    AllData.append(data["e_data"])
-    AllData.append(data["c_data"])
-    AllData.append(data["s_data"])
+    AllData.append(clr(data["e_data"]))
+    AllData.append(clr(data["c_data"]))
+    AllData.append(clr(data["s_data"]))
 
     AllY = []
     data2 = np.load('y_trains.npz')

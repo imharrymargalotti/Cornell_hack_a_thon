@@ -120,7 +120,7 @@ def RandForest(AllData, y):
 def PooledRF(AllData, y):
     x = AllData[0]
     x2 = AllData[1]
-    y = y[0]
+    y1 = y[0]
     y2 = y[1]
     rows,cols = x.shape
     row2,col2 = x2.shape
@@ -134,27 +134,31 @@ def PooledRF(AllData, y):
     for i in range(rows, crow):
         bigData[i] = x2[i-rows]
 
-    rowy = y.shape
-    rowy2 = y2.shape
-    crowy = rowy+rowy2
+    y_total = []
+    for num in y1:
+        y_total.append(num)
 
-    bigYData = np.zeros((crowy))
+    for num in y2:
+        y_total.append(num)
 
+    y_fin = np.asarray(y_total)
+    # print(y_fin)
 
-    for i in range(rowy):
-        bigYData[i] = x[i]
-
-    for i in range(rowy, crowy):
-        bigYData[i] = x2[i-rowy]
-
-    print(bigYData)
-    #
-    # clf = RandomForestClassifier(n_estimators=100, max_depth=2,
-    #                              random_state=0)
-    # clf.fit(combinedx,combinedy)
-    # y_predict = clf.predict(AllData[2])
-    # fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[2], y_predict)
-    # plotRoc(fpr,tpr,"Pooled(E_and_C.png")
+    clf = RandomForestClassifier(n_estimators=100, max_depth=2,
+                                 random_state=0)
+    clf.fit(bigData,y_fin)
+    name = ""
+    for x in range(3):  # loops case
+        if (x == 0):
+            name = "e_data_train_EandC"
+        elif (x == 1):
+            name = "c_data_train_EandC"
+        else:
+            name = "s_data_train_EandC"
+        case = AllData[x]
+        y_predict = clf.predict(case)
+        fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[x], y_predict)
+        plotRoc(fpr, tpr, str(x + 10) + name + ".png")
 
 
 def main():

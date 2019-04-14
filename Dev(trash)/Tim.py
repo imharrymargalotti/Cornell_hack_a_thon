@@ -175,6 +175,8 @@ def sam_y(sa, path):
 
 
 def main():
+    d = np.load('info.npz')
+    clr(d['e_data'])
 
     print()
 

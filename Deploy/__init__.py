@@ -3,10 +3,57 @@ from Deploy import environset
 import os
 import numpy as np
 from scipy import stats
+import numpy as np
+import os
+import sklearn
+from scipy import stats
+from Deploy import environset
+import pandas as pd
+import numpy as np
+import phate
+import scprep
+from sklearn.ensemble import IsolationForest
+import seaborn
+import matplotlib.pyplot as plt
+from random import randint
 
 
 
 environset.set_paths()
+def ProcessData(data,y_train):
+    hArray=[]
+    dArray=[]
+    shape,garbage=data.shape
+    for x in range(shape):
+        if(y_train[x]==0):
+            hArray.append(data[x])
+        else:
+            dArray.append(data[x])
+    hArray=np.array(hArray)
+    dArray=np.array(dArray)
+
+
+    return hArray,dArray
+def plotDist(hArray,dArray,IF,name):
+    dArrayScore=IF.score_samples(dArray)
+    hArrayScore=IF.score_samples(hArray)
+    seaborn.distplot(dArrayScore, color="skyblue", label="Disease")
+    seaborn.distplot(hArrayScore, color="red", label="Healthy")
+    plt.savefig(name,transparant=True)
+
+def plotRoc(fpr,tpr,name):
+    plt.figure()
+    lw = 2
+    plt.plot(fpr, tpr, color='darkorange',
+             lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
+    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic example')
+    plt.legend(loc="lower right")
+    plt.show()
 
 
 def geo_mean(iterable):

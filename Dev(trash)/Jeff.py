@@ -78,6 +78,20 @@ def plotDist(hArray,dArray,IF,name):
     seaborn.distplot(hArrayScore, color="red", label="Healthy")
     plt.savefig(name,transparant=True)
 
+def plotRoc(fpr,tpr,name):
+    plt.figure()
+    lw = 2
+    plt.plot(fpr, tpr, color='darkorange',
+             lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
+    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic example')
+    plt.legend(loc="lower right")
+    plt.show()
+
 col,data=read_in_ERR()
 y_train=read_in_y()
 hArray,dArray=ProcessData(data,y_train)

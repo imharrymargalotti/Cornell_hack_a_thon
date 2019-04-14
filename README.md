@@ -37,5 +37,5 @@ values ('paths').
 
 
 ### Acknowledgements
-* Andrew Ang
-* Juan '''
+* Andrew 'the machine man' Ang
+* Juan Felipe Beltran

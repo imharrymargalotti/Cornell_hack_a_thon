@@ -269,9 +269,12 @@ def main():
     s_y = sam_y(clean_SAMEA, sam_path)
     # print(s_y)
     # print(len(s_y))
-
+    allY = []
+    allY.append(e_y)
+    allY.append(c_y)
+    allY.append(s_y)
     #------------------------------------------------PIPELINE-------------------------------------------------------------------------------------------------------------
-    AnomolyDetector(all_data, s_id)
-    
+    AnomolyDetector(all_data, allY)
+
 
 main()

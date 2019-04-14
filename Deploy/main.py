@@ -24,11 +24,11 @@ def AnomolyDetector(AllCases, y):
     # xtrain is yu healthy
     # assumes largest set 'to train on' is first
     H, D = ProcessData(AllCases[0], y[0])
-    print(H.shape)
+    # print(H.shape)
     test = H.reshape((53,849))
-    print(test.shape)
-    print(test)
-    clf = IsolationForest(max_samples=100)
+    # print(test.shape)
+    # print(test)
+    clf = IsolationForest(max_samples=1000)
     clf.fit(test)
     for x in range(3):  # loops case
         case = AllCases[x]
@@ -53,7 +53,7 @@ def ProcessData(data,y_train):
 
 
 def plotDist(hArray,dArray,IF,name):
-    print("in dist")
+    # print("in dist")
 
     dArrayScore=IF.score_samples(dArray)
     hArrayScore=IF.score_samples(hArray)
@@ -77,7 +77,6 @@ def plotDist(hArray,dArray,IF,name):
 #     plt.show()
 
 
-    # AnomolyDetector(all_data, allY)
 
 
 def main():
@@ -96,6 +95,6 @@ def main():
     AllY.append(data2["c_train"])
     AllY.append(data2["s_train"])
 
-   
+    AnomolyDetector(AllData, AllY)
 
 main()

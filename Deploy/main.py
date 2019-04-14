@@ -117,6 +117,46 @@ def RandForest(AllData, y):
         fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[x], y_predict)
         plotRoc(fpr, tpr, str(x+10)+name+".png")
 
+def PooledRF(AllData, y):
+    x = AllData[0]
+    x2 = AllData[1]
+    y = y[0]
+    y2 = y[1]
+    rows,cols = x.shape
+    row2,col2 = x2.shape
+    crow = rows+row2
+
+    bigData=np.zeros((crow, 849))
+
+    for i in range(rows):
+        bigData[i] = x[i]
+
+    for i in range(rows, crow):
+        bigData[i] = x2[i-rows]
+
+    rowy = y.shape
+    rowy2 = y2.shape
+    crowy = rowy+rowy2
+
+    bigYData = np.zeros((crowy))
+
+
+    for i in range(rowy):
+        bigYData[i] = x[i]
+
+    for i in range(rowy, crowy):
+        bigYData[i] = x2[i-rowy]
+
+    print(bigYData)
+    #
+    # clf = RandomForestClassifier(n_estimators=100, max_depth=2,
+    #                              random_state=0)
+    # clf.fit(combinedx,combinedy)
+    # y_predict = clf.predict(AllData[2])
+    # fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[2], y_predict)
+    # plotRoc(fpr,tpr,"Pooled(E_and_C.png")
+
+
 def main():
     data = np.load('info.npz')
     # print(data['e_data'].shape)
@@ -133,6 +173,8 @@ def main():
     AllY.append(data2["c_train"])
     AllY.append(data2["s_train"])
 
+    # print(AllY[1].shape)
     # AnomolyDetector(AllData, AllY)
-    RandForest(AllData, AllY)
+    # RandForest(AllData, AllY)
+    PooledRF(AllData,AllY)
 main()

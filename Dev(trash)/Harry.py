@@ -2,13 +2,13 @@ import numpy as np
 from sklearn import metrics
 from sklearn.decomposition import PCA
 from sklearn.ensemble import IsolationForest
-
+from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import make_classification
 
 from Jeff.py import *
 
-from Jeff import ProcessData
+from Jeff import ProcessData, plotRoc
 
 
 def RandForest(AllData, y):
@@ -18,33 +18,54 @@ def RandForest(AllData, y):
     y_train = y[0]
     clf.fit(X, y_train)  # TRAIN ON YU
     for x in range(3):  # loops case
-        case = AllCases[x]
+        case = AllData[x]
         y_predict = clf.predict(case)
         fpr, tpr, thresholds = metrics.roc_curve(y[x], y_predict)
-        plotRock(fpr)
-
-    # print(clf.feature_importances_) hold off on this
-
-    y_predict = clf.predict_proba(X_test)
-    print(clf.score(y_predict, y_test))
+        plotRoc(fpr, tpr, str(x+10)+"_plot.png")
 
 
-def AnomolyDetector(AllCases, y_train):
+def AnomolyDetector(AllCases, y):
     # xtrain is yu healthy
     # assumes largest set 'to train on' is first
-    H, D = ProcessData(AllCases[0], y_train)
+    H, D = ProcessData(AllCases[0], y[0])
     clf = IsolationForest(behaviour='new', max_samples=100, contamination='auto')
-    X_train = AllCases[0]
-    clf.fit(X_train)
+    clf.fit(H)
     for x in range(3):  # loops case
         case = AllCases[x]
-        h, d = ProcessData(AllCases[x], y_train)
+        h, d = ProcessData(case, y[x])
         pltDist(h, d, clf, (str(x) + "_plot"))
 
 
+def PooledRF(AllData, y):
+    combinedx = AllData[0]
+    combinedx = np.concatenate(AllData[1])
 
+    combinedy = y[0]
+    combinedy = np.concatenate(y[1])
 
-#
+    clf = RandomForestClassifier(n_estimators=100, max_depth=2,
+                                 random_state=0)
+    clf.fit(combinedx,combinedy)
+    y_predict = clf.predict(AllData[2])
+    fpr, tpr, thresholds = metrics.roc_curve(y[2], y_predict)
+    plotRoc(fpr,thresholds,"Pooled.png")
+
+def fSig(AllData, y):
+    combinedx = AllData[0]
+    combinedx = np.concatenate(AllData[1])
+
+    combinedy = y[0]
+    combinedy = np.concatenate(y[1])
+
+    clf = RandomForestClassifier(n_estimators=100, max_depth=2,
+                                 random_state=0)
+    clf.fit(combinedx, combinedy)
+    selector = RFE(clf,5,1,0)
+    selector.fit(combinedx,combinedy)
+    rankedF = selector.ranking_
+    return rankedF
+
+#centered logarithmic ratio
 # def pca_reduction(X):
 #     pca = PCA(n_components=2)
 #     pca.fit(X)

@@ -24,8 +24,12 @@ def AnomolyDetector(AllCases, y):
     # xtrain is yu healthy
     # assumes largest set 'to train on' is first
     H, D = ProcessData(AllCases[0], y[0])
-    clf = IsolationForest(behaviour='new', max_samples=100, contamination='auto')
-    clf.fit(H)
+    print(H.shape)
+    test = H.reshape((53,849))
+    print(test.shape)
+    print(test)
+    clf = IsolationForest(max_samples=100)
+    clf.fit(test)
     for x in range(3):  # loops case
         case = AllCases[x]
         h, d = ProcessData(case, y[x])
@@ -37,34 +41,40 @@ def ProcessData(data,y_train):
     shape,garbage=data.shape
     for x in range(shape):
         if(y_train[x]==0):
-            hArray.append(data[x])
+            hArray.append(data[x,:])
         else:
-            dArray.append(data[x])
+            dArray.append(data[x,:])
+    #print(hArray)
     hArray=np.array(hArray)
     dArray=np.array(dArray)
 
 
     return hArray,dArray
+
+
 def plotDist(hArray,dArray,IF,name):
+    print("in dist")
+
     dArrayScore=IF.score_samples(dArray)
     hArrayScore=IF.score_samples(hArray)
     seaborn.distplot(dArrayScore, color="skyblue", label="Disease")
     seaborn.distplot(hArrayScore, color="red", label="Healthy")
     plt.savefig(name,transparant=True)
-
-def plotRoc(fpr,tpr,name):
-    plt.figure()
-    lw = 2
-    plt.plot(fpr, tpr, color='darkorange',
-             lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
-    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic example')
-    plt.legend(loc="lower right")
     plt.show()
+
+# def plotRoc(fpr,tpr,name):
+#     plt.figure()
+#     lw = 2
+#     plt.plot(fpr, tpr, color='darkorange',
+#              lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
+#     plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+#     plt.xlim([0.0, 1.0])
+#     plt.ylim([0.0, 1.05])
+#     plt.xlabel('False Positive Rate')
+#     plt.ylabel('True Positive Rate')
+#     plt.title('Receiver operating characteristic example')
+#     plt.legend(loc="lower right")
+#     plt.show()
 
 
 def geo_mean(iterable):
@@ -111,18 +121,18 @@ def read_in_y():
     return res
 
 
-def clr(X):
-    to_return = np.zeros(X.shape)
-    # print(X[:,1])
-    m = X.shape[1]
-    u = m-1
-    for i in range(0,m):
-        # print(i)
-        col = X[:,i]
-        x_gmean = geo_mean(X[:,i])
-        print(x_gmean)
-        to_return[:,i] = np.log(X[:,i].reshape(X.shape[0]) / x_gmean)
-    return to_return
+# def clr(X):
+#     to_return = np.zeros(X.shape)
+#     # print(X[:,1])
+#     m = X.shape[1]
+#     u = m-1
+#     for i in range(0,m):
+#         # print(i)
+#         col = X[:,i]
+#         x_gmean = geo_mean(X[:,i])
+#         #print(x_gmean)
+#         to_return[:,i] = np.log(X[:,i].reshape(X.shape[0]) / x_gmean)
+#     return to_return
 
 
 
@@ -240,13 +250,11 @@ def main():
     # print(clr_e)
 
 
-    print(e_res.shape)
+    #print(e_res.shape)
     s_id, s_res = read_in_data(s_path)
-    clr_s = clr(s_res)
-    print(s_res.shape)
+    #print(s_res.shape)
     c_id, c_res = read_in_data(c_path)
-    clr_c = clr(c_res)
-    print(c_res.shape)
+    #print(c_res.shape)
 
     all_data = []
     all_data.append(e_res.T)

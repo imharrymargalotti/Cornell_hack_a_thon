@@ -30,7 +30,7 @@ def AnomolyDetector(AllCases, y):
     test = H.reshape((53,849))
     # print(test.shape)
     # print(test)
-    clf = IsolationForest(max_samples='auto')
+    clf = IsolationForest(n_estimators=500, max_samples='auto')
     clf.fit(test)
     name = ""
     for x in range(3):  # loops case
@@ -113,7 +113,9 @@ def RandForest(AllData, y):
         else:
             name = "s_data"
         case = AllData[x]
-        y_predict = clf.predict(case)
+        y_predict = clf.predict_proba(case)[:,1]
+
+
         fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[x], y_predict)
         plotRoc(fpr, tpr, str(x+10)+name+".png")
 
@@ -156,9 +158,14 @@ def PooledRF(AllData, y):
         else:
             name = "s_data_train_EandC"
         case = AllData[x]
-        y_predict = clf.predict(case)
+        y_predict = clf.predict_proba(case)[:,1]
         fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[x], y_predict)
         plotRoc(fpr, tpr, str(x + 10) + name + ".png")
+
+
+
+def featExtraction(AllData, y):
+
 
 
 def main():
@@ -178,7 +185,7 @@ def main():
     AllY.append(data2["s_train"])
 
     # print(AllY[1].shape)
-    # AnomolyDetector(AllData, AllY)
-    # RandForest(AllData, AllY)
+    AnomolyDetector(AllData, AllY)
+    RandForest(AllData, AllY)
     PooledRF(AllData,AllY)
 main()

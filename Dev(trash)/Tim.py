@@ -76,9 +76,10 @@ def read_in_y():
 
 def clr(X):
     to_return = np.zeros(X.shape)
-    m = X.shape[0]
+    m = X.shape[1]
     for i in range(0,m):
         x_gmean = stats.gmean(X[:,i])
+        print(x_gmean)
         to_return[:,i] = np.log(X[:,i] / x_gmean)
     return to_return
 
@@ -186,6 +187,10 @@ def main():
     # y_sa = sa_stuff(clean_SAMEA)
     # print(y_cc)
     # print(y_sa)
+    #
+    # x= np.ones((5,5))
+    #
+    # print(clr(np.ones((34,56))))
 
 
 main()

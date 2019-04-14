@@ -1,4 +1,6 @@
 #import Tim
+from sklearn.metrics import auc
+
 from Deploy import environset
 import os
 import numpy as np
@@ -10,7 +12,7 @@ from scipy import stats
 from Deploy import environset
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import IsolationForest
+from sklearn.ensemble import IsolationForest, RandomForestClassifier
 import seaborn
 import matplotlib.pyplot as plt
 from random import randint
@@ -81,23 +83,39 @@ def clr(X):
     return to_return
 
 
-
-# def plotRoc(fpr,tpr,name):
-#     plt.figure()
-#     lw = 2
-#     plt.plot(fpr, tpr, color='darkorange',
-#              lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
-#     plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-#     plt.xlim([0.0, 1.0])
-#     plt.ylim([0.0, 1.05])
-#     plt.xlabel('False Positive Rate')
-#     plt.ylabel('True Positive Rate')
-#     plt.title('Receiver operating characteristic example')
-#     plt.legend(loc="lower right")
-#     plt.show()
-
+def plotRoc(fpr,tpr,name):
+    roc_auc = auc(fpr, tpr)
+    plt.figure()
+    plt.plot(fpr, tpr, color='darkorange', lw=1, label='ROC curve (area = %0.2f)' % roc_auc)
+    plt.plot([0, 1], [0, 1], color='navy', linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic')
+    plt.legend(loc="lower right")
+    plt.savefig(name, transparant=True)
+    plt.show()
 
 
+def RandForest(AllData, y):
+    clf = RandomForestClassifier(n_estimators=100, max_depth=2,
+                                 random_state=0)
+    X = AllData[0]
+    y_train = y[0]
+    clf.fit(X, y_train)  # TRAIN ON YU
+    name = ""
+    for x in range(3):  # loops case
+        if (x == 0):
+            name = "e_data"
+        elif (x == 1):
+            name = "c_data"
+        else:
+            name = "s_data"
+        case = AllData[x]
+        y_predict = clf.predict(case)
+        fpr, tpr, thresholds = sklearn.metrics.roc_curve(y[x], y_predict)
+        plotRoc(fpr, tpr, str(x+10)+name+".png")
 
 def main():
     data = np.load('info.npz')
@@ -115,6 +133,6 @@ def main():
     AllY.append(data2["c_train"])
     AllY.append(data2["s_train"])
 
-    AnomolyDetector(AllData, AllY)
-
+    # AnomolyDetector(AllData, AllY)
+    RandForest(AllData, AllY)
 main()

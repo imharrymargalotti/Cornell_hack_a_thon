@@ -201,16 +201,18 @@ def main():
     clean_SAMEA = SAMEA.split("    ")
 
     e_y = read_in_y()
-    print(e_y)
-    print(len(e_y))
+    # print(e_y)
+    # print(len(e_y))
     cy_path = os.environ.get("CY")
     c_y = cc_y(clean_CCSI, cy_path)
-    print(c_y)
-    print(len(c_y))
+    # print(c_y)
+    # print(len(c_y))
     sam_path = os.environ.get("SY")
     s_y = sam_y(clean_SAMEA, sam_path)
-    print(s_y)
-    print(len(s_y))
+    # print(s_y)
+    # print(len(s_y))
+
+    #------------------------------------------------PIPELINE-------------------------------------------------------------------------------------------------------------
 
 
 

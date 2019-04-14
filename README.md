@@ -34,3 +34,8 @@ accessible.
 * environset.py is very important but git-ignored (after initial clone) so we can keep it unique.
 A snippet of the file will exist in slack so we can all used the same variable names with different
 values ('paths').
+
+
+### Acknowledgements
+* Andrew 'the machine man' Ang
+* Juan Felipe Beltran

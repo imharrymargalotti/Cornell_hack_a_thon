@@ -39,8 +39,7 @@ def read_in_COW():
     return ids, results
 
 
-def read_in_ERR():
-    path = os.environ.get("ERR")
+def read_in_data(path):
     input = []
     with open(path) as f:
         lines=f.readlines()
@@ -81,13 +80,12 @@ def clr(X):
     for i in range(0,m):
         x_gmean = stats.gmean(X[:,i])
         to_return[:,i] = np.log(X[:,i] / x_gmean)
-
     return to_return
 
 
 
-def clean_data(cc):
-    with open("/Users/timc/PycharmProjects/CowPY/Data/SraRunTableCCIS.csv") as f:
+def cc_y(cc, path):
+    with open(path) as f:
         lines = f.readlines()
     f.close()
     c_cc = [x.strip() for x in lines]
@@ -130,8 +128,8 @@ def clean_data(cc):
     # f.close()
 
 
-def sa_stuff(sa):
-    with open("/Users/timc/PycharmProjects/CowPY/Data/SraRunTableSAMEA.csv") as f:
+def sam_y(sa, path):
+    with open(path) as f:
         slines= f.readlines()
     f.close()
 
@@ -184,10 +182,10 @@ def main():
     clean_SAMEA = SAMEA.split("    ")
     #print(clean_SAMEA)
 
-    y_cc = clean_data(clean_CCSI)
-    y_sa = sa_stuff(clean_SAMEA)
-    print(y_cc)
-    print(y_sa)
+    # y_cc = clean_data(clean_CCSI)
+    # y_sa = sa_stuff(clean_SAMEA)
+    # print(y_cc)
+    # print(y_sa)
 
 
 main()

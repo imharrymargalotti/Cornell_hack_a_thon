@@ -3,8 +3,12 @@ import os
 
 def set_paths():
     os.environ["COW_CSV"] = str('/Users/timc/PycharmProjects/CowPY/Data/table.from_biom.txt')
-    os.environ["ERR"] = str("/Users/jeffpage/Desktop/CowPY/Data/ERR1.csv")
-    os.environ["Y"] = str("/Users/jeffpage/Desktop/CowPY/Data/y_trainDone.csv")
+    os.environ["ERR"] = str("/Users/timc/PycharmProjects/CowPY/Data/ERR1.csv")
+    os.environ["Y"] = str("/Users/timc/PycharmProjects/CowPY/Data/y_trainDone.csv")
+    os.environ["CCSI"] = str("/Users/timc/PycharmProjects/CowPY/Data/CCSIdata.csv")
+    os.environ["SAMEA"] = str("/Users/timc/PycharmProjects/CowPY/Data/SAMEAdata.csv")
+    os.environ["SY"] =str("/Users/timc/PycharmProjects/CowPY/Data/SraRunTableSAMEA.csv")
+    os.environ["CY"] = str("/Users/timc/PycharmProjects/CowPY/Data/SraRunTableCCIS.csv")
 
 
 

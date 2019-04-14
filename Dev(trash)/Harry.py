@@ -2,7 +2,8 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.ensemble import IsolationForest
 
-def PCA(X):
+
+def pca_reduction(X):
     pca = PCA(n_components=2)
     pca.fit(X)
 

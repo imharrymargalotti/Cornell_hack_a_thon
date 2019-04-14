@@ -11,6 +11,7 @@ from sklearn.ensemble import IsolationForest
 import seaborn
 import matplotlib.pyplot as plt
 from random import randint
+from sklearn.metrics import roc_curve, auc
 
 
 environset.set_paths()
@@ -79,18 +80,19 @@ def plotDist(hArray,dArray,IF,name):
     plt.savefig(name,transparant=True)
 
 def plotRoc(fpr,tpr,name):
+    roc_auc = auc(fpr, tpr)
     plt.figure()
-    lw = 2
-    plt.plot(fpr, tpr, color='darkorange',
-             lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
-    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+    plt.plot(fpr, tpr, color='darkorange', lw=1, label='ROC curve (area = %0.2f)' % roc_auc)
+    plt.plot([0, 1], [0, 1], color='navy', lw='lw', linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic example')
+    plt.title('Receiver operating characteristic')
     plt.legend(loc="lower right")
+    plt.savefig(name, transparant=True)
     plt.show()
+
 
 col,data=read_in_ERR()
 y_train=read_in_y()

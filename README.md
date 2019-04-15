@@ -1,41 +1,33 @@
 # Cornell_hack_a_thon
+#Colonosco-PY
 ## Contributing:
 * Harrison Margalotti
 * Tim Clerico
 * Connor Robinson
 * Jeff Page
 * Erika Ganda
-## Task:
-In progress
+## Description:
+Project built in about 36 hours for the Cornell 2019 Micobiome Hackathong where we implemented a machine learning algorithm to classify someone as having colorectal cancer or not based on the bacterial microbiome from their poop. We did this through anomaly detection (isolation forest) across 3 studies; one from the US, one from China and one from Germany and found out that if by training  the anomaly detector on just the healthy people from China that we can still distinguish healthy and diseased people from Germany and the US meaning that they have similar healthy microbiomes. 
+
+Then we used a classification algorithm called random forest where we trained it on just China and scored our predictions on US and Germany with varying levels of accuracy. When then trained the classifier on data from China and US pooled together, and ranked Germany, it received the exact same score concluding that there are underlying bacteria present in all 3 places that are relevant to the cancer. 
+
+We concluded by finding out which bacteria had the greatest impact on score (by shuffling one feature (bacteria) at a time and measureing how it impacted the score) and we able to identify the top 5 bacteria’s that exist in those microbiomes that have some impact on the absence or presence of colorectal cancer and we backed it up with a study that matched our conclusion. 
+
+Our algorithm was able to lead us to these findings without including any risk factors: age, sex, obesity, other diseases...we worked exclusively with bacteria samples
 
 ### Prerequisites
 
-Works off of data set not included in repo
+requirements.txt (included)
+data in .npz files (included)
 
 ## Built With
-* Tensorflow
 * Python 3.7
-* Pandas
 * SciKit-Lean
-* phylofactor
+* NumPy
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-### For the Team:
-* The deploy directory is for code that is to be pushed to git (eventually)
-* The Dev directory is for playing with
- whatever you need to for testing and implementing
-* Requirements.txt is going to list all of our dependencies. 
-i.e if you have have to pip install anything, add it to requirements.txt so that everyone can get it
-* I Recommend making a data directory and marking it as excluded through the IDE.
-This way you dont have to waste time indexing the dataset (@Jeff) while still having it be easily 
-accessible. 
-* environset.py is very important but git-ignored (after initial clone) so we can keep it unique.
-A snippet of the file will exist in slack so we can all used the same variable names with different
-values ('paths').
-
-
 ### Acknowledgements
-* Andrew 'the machine man' Ang
+* Andrew 'the machine man' Ng
 * Juan Felipe Beltran
